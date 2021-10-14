@@ -1,2 +1,2 @@
 # Algorithms
-# Algorithms
+Binary-Search (Visualized)
