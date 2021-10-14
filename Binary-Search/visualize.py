@@ -9,7 +9,7 @@ class MainWindow(tk.Tk):
         self.resizable(False, False)
         self.title("Binary Search Algorithm")
         self.int_list = [i for i in range(96)]
-        self.target = 2
+        self.target = 87
         self.create_button = tk.Button(self, text="Start Visualization", width=240, height=15,
                                        command=self.activate_binary_search)
         self.create_button.place(x=0, y=0)
@@ -26,7 +26,6 @@ class MainWindow(tk.Tk):
 
         lower = 0
         upper = len(self.int_list) - 1
-        mid_val = (lower + upper) // 2
 
         if self.int_list[0] == self.target:
             self.pillars[0].config(bg="green")
@@ -37,19 +36,20 @@ class MainWindow(tk.Tk):
 
         self.pillars[lower].config(bg="black")
         self.pillars[upper].config(bg="black")
-        self.pillars[mid_val].config(bg="red")
 
         while lower <= upper:
+            mid_val = (lower + upper) // 2
+            self.pillars[mid_val].config(bg="blue")
             self.update()
             sleep(0.5)
-            mid_val = (lower + upper) // 2
-            self.pillars[mid_val].config(bg="red")
+
 
             if self.int_list[mid_val] == self.target:
                 self.pillars[mid_val].config(bg="green")
                 return print("Found it :)")
 
             else:
+
                 self.pillars[mid_val].config(bg="grey")
                 if self.int_list[mid_val] < self.target:
                     self.pillars[lower].config(bg="grey")
@@ -59,6 +59,8 @@ class MainWindow(tk.Tk):
                     self.pillars[upper].config(bg="grey")
                     upper = mid_val - 1
                     self.pillars[upper].config(bg="black")
+
+
         return print("Didn't find it :/")
 
 
