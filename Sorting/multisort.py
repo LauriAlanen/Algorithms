@@ -9,10 +9,10 @@ class Window(tk.Tk):
                         "Insertion Sort",
                         "Selection Sort",
                         "Heap Sort"]
-        self.geometry("1504x800")
+
+
         self.resizable(0, 0)
         self.canvas = tk.Canvas(self, width=1500, height=800)
-        self.draw()
 
         self.var = tk.StringVar(self)
         self.var.set(self.options[0])
@@ -21,18 +21,20 @@ class Window(tk.Tk):
         self.choice.place(x=0, y=0)
 
         self.activation_btn = tk.Button(self, text="Activate Sort", command=self.sorting_method)
-        self.activation_btn.place(x=105, y=1)
+        self.activation_btn.place(x=105, y=2)
         self.reset_btn = tk.Button(self, text="Reset", command=self.draw)
-        self.reset_btn.place(x=185, y=1)
+        self.reset_btn.place(x=185, y=2)
+        self.draw()
 
     def sorting_method(self):
-        if self.var.get() == "Bubble Sort":
+        choice = self.var.get()
+        if choice == "Bubble Sort":
             self.bubble_sort(self.height)
-        if self.var.get() == "Insertion Sort":
+        if choice == "Insertion Sort":
             self.insertion_sort(self.height)
-        if self.var.get() == "Selection Sort":
+        if choice == "Selection Sort":
             self.selection_sort(self.height)
-        elif self.var.get() == "Heap Sort":
+        elif choice == "Heap Sort":
             self.heap_sort(self.height)
 
     def draw(self):
@@ -86,34 +88,33 @@ class Window(tk.Tk):
             array[i], array[lowest_value_index] = array[lowest_value_index], array[i]
             self.update_draw(array)
 
-    def heapify(self, nums, heap_size, root_index):
+    def heapify(self, array, heap_size, root_index):
         largest = root_index
         left_child = (2 * root_index) + 1
         right_child = (2 * root_index) + 2
 
-        if left_child < heap_size and nums[left_child] > nums[largest]:
+        if left_child < heap_size and array[left_child] > array[largest]:
             largest = left_child
 
-        if right_child < heap_size and nums[right_child] > nums[largest]:
+        if right_child < heap_size and array[right_child] > array[largest]:
             largest = right_child
 
         if largest != root_index:
-            nums[root_index], nums[largest] = nums[largest], nums[root_index]
-            self.heapify(nums, heap_size, largest)
+            array[root_index], array[largest] = array[largest], array[root_index]
+            self.heapify(array, heap_size, largest)
 
-    def heap_sort(self, nums):
-        n = len(nums)
+    def heap_sort(self, array):
+        n = len(array)
 
         for i in range(n, -1, -1):
-            self.heapify(nums, n, i)
+            self.heapify(array, n, i)
 
         for i in range(n - 1, 0, -1):
-            nums[i], nums[0] = nums[0], nums[i]
-            self.heapify(nums, i, 0)
-            self.update_draw(nums)
+            array[i], array[0] = array[0], array[i]
+            self.heapify(array, i, 0)
+            self.update_draw(array)
 
 
 if __name__ == "__main__":
     App = Window()
     App.mainloop()
-
